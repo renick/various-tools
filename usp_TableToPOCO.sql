@@ -24,12 +24,20 @@ SET NOCOUNT ON
 DECLARE @temp TABLE(sort INT,code TEXT)
 
 INSERT INTO @temp
-SELECT 1, 'public class ' + @table_name + CHAR(13) + CHAR(10) + '{'
+SELECT 2, 'using System;' + CHAR(13) + CHAR(10)
+INSERT INTO @temp
+SELECT 3, 'using System.Runtime.Serialization;' + CHAR(13) + CHAR(10)
+
+INSERT INTO @temp
+SELECT 5, '[DataContract]' + CHAR(13) + CHAR(10)
+
+INSERT INTO @temp
+SELECT 6, 'public class ' + @table_name + CHAR(13) + CHAR(10) + '{'
 
 INSERT INTO @temp
 SELECT 8, '#region Public Properties' + CHAR(13) + CHAR(10)
 INSERT INTO @temp
-SELECT 9, CHAR(9) + 'public ' +
+SELECT 9,  CHAR(9) + '[DataMember] ' + CHAR(13) + CHAR(10) + CHAR(9) + 'public ' +
 CASE
 WHEN DATA_TYPE LIKE '%UNIQUEIDENTIFIER%' THEN 'Guid '
 WHEN DATA_TYPE LIKE '%CHAR%' THEN 'string '
